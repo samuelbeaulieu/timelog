@@ -36,7 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DC4A93EE278B9CCF003A2FB1 /* timelog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timelog.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC4A93EE278B9CCF003A2FB1 /* Timelog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timelog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC4A93F1278B9CCF003A2FB1 /* timelogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timelogApp.swift; sourceTree = "<group>"; };
 		DC4A93F3278B9CCF003A2FB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DC4A93F5278B9CD0003A2FB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -88,7 +88,7 @@
 		DC4A93EF278B9CCF003A2FB1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DC4A93EE278B9CCF003A2FB1 /* timelog.app */,
+				DC4A93EE278B9CCF003A2FB1 /* Timelog.app */,
 				DC4A9403278B9CD0003A2FB1 /* timelogTests.xctest */,
 				DC4A940D278B9CD0003A2FB1 /* timelogUITests.xctest */,
 			);
@@ -150,7 +150,7 @@
 			);
 			name = timelog;
 			productName = timelog;
-			productReference = DC4A93EE278B9CCF003A2FB1 /* timelog.app */;
+			productReference = DC4A93EE278B9CCF003A2FB1 /* Timelog.app */;
 			productType = "com.apple.product-type.application";
 		};
 		DC4A9402278B9CD0003A2FB1 /* timelogTests */ = {
@@ -441,7 +441,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.beaulieu.timelog;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Timelog;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -470,7 +470,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.beaulieu.timelog;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Timelog;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -15,7 +15,11 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
         for _ in 0..<10 {
             let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+            let fmt = ISO8601DateFormatter()
+            newItem.timeStart = fmt.date(from: "2020-08-06T10:20:00+0000")
+            newItem.timeEnd = fmt.date(from: "2020-08-06T11:25:00+0000")!
+            newItem.duration = Int64(newItem.timeStart!.distance(to: newItem.timeEnd!))
+            newItem.week = 1
         }
         do {
             try viewContext.save()

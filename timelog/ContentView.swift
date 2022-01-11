@@ -243,8 +243,8 @@ struct ContentView: View {
                     EditButton()
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Add") {
-                        showingSheet.toggle()
+                    Button(action: showSheet) {
+                        Label("Add Transaction", systemImage: "plus")
                     }
                 }
             }

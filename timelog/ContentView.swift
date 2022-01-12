@@ -193,8 +193,6 @@ struct ContentView: View {
     }
     
     func getProgressColor(value: Int64, total: Int64) -> Color {
-        print(value)
-        print(total)
         if value == total {
             return .green
         }
@@ -430,12 +428,9 @@ extension Date {
     var weekOfYear: Int {
         var calendar = Calendar(identifier: .gregorian)
         calendar.firstWeekday = 2
-        print(calendar.firstWeekday)
         let formatter = DateFormatter()
         formatter.calendar = calendar
         formatter.dateFormat = "W"
-        print(formatter.string(from: self))
-        print(Int(formatter.string(from: self))!)
         return Int(formatter.string(from: self))!
     }
 

@@ -165,6 +165,8 @@ struct ContentView: View {
     private var items: FetchedResults<Item>
 
     @State private var showingSheet = false
+    @State private var showingAlert = false
+    @State private var alertMessage = ""
     
     let notificationManager: NotificationManager = NotificationManager.shared
 
@@ -220,6 +222,10 @@ struct ContentView: View {
                                 }
                             }
                             .frame(width: 170, alignment: .trailing)
+                            .onTapGesture {
+                                showingAlert.toggle()
+                                alertMessage = showLoggedTimeWithTotalTime(weekItems: yearDictionary[section[0].week]!, weekNumber: section[0].week)
+                            }
                         }
                     )) {
                         ForEach(section, id: \.self) { item in
@@ -305,10 +311,24 @@ struct ContentView: View {
                 SheetView()
             }
         }
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Time Remaining"), message: Text(alertMessage), dismissButton: .default(Text("Done")))
+        }
     }
     
     private func showLoggedTimeWithTotalTime(weekItems: [Item], weekNumber: Int64) -> String {
-        return "\(secondsToHoursMinutesSeconds(getLoggedTimeForWeek(weekItems: weekItems)))/\(secondsToHoursMinutesSeconds(getNumberOfDaysForWeekNumber(weekNumber: weekNumber)))"
+        let logged = getLoggedTimeForWeek(weekItems: weekItems)
+        let total = getNumberOfDaysForWeekNumber(weekNumber: weekNumber)
+        
+        let remaining = total - logged
+        
+        let remainingInDays = (Double(total) - Double(logged)) / Double(31500)
+        
+        if remaining == 0 {
+            return "You're done! ⌛️\nGo enjoy your free time!! 🥳"
+        }
+
+        return "\(secondsToHoursMinutesSeconds(remaining)) or \(String(format:"%.3f", remainingInDays)) days (of 8h 45m)"
     }
 
     private func getLoggedTimeForWeek(weekItems: [Item]) -> Int64 {

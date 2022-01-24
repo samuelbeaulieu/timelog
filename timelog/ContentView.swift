@@ -137,13 +137,6 @@ struct ContentView: View {
         }.values.sorted() { $0[0].week > $1[0].week }
     }
     
-    func getProgressColor(value: Int64, total: Int64) -> Color {
-        if value == total {
-            return .green
-        }
-        return .blue
-    }
-    
     var body: some View {
         TabView {
             NavigationView {
@@ -449,6 +442,16 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate{
         
         completionHandler(.banner)
     }
+}
+
+func getProgressColor(value: Int64, total: Int64) -> Color {
+    if value > total {
+        return .red
+    }
+    if value == total {
+        return .green
+    }
+    return .blue
 }
 
 struct ContentView_Previews: PreviewProvider {

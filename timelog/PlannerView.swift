@@ -58,13 +58,6 @@ struct PlannerView: View {
         return Double(mon + tue + wed + thu + fri + sat + sun)
     }
     
-    func getProgressColor(value: Int64, total: Int64) -> Color {
-        if value == total {
-            return .green
-        }
-        return .blue
-    }
-    
     var body: some View {
         NavigationView() {
             Form {

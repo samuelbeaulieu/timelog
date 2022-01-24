@@ -61,7 +61,33 @@ struct PlannerView: View {
     var body: some View {
         NavigationView() {
             Form {
-                ProgressView("\(secondsToHoursMinutesSeconds(Int64(getTotalTime()))) / \(secondsToHoursMinutesSeconds(getNumberOfDaysForWeekNumber(weekNumber: Int64(Calendar.current.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0))))))", value: getTotalTime(), total: Double(getNumberOfDaysForWeekNumber(weekNumber: Int64(Calendar.current.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0))))))
+                HStack() {
+                    VStack(alignment: .leading) {
+                        Text("Planned")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Text("\(secondsToHoursMinutesSeconds(Int64(getTotalTime())))")
+                    }
+                    .frame(minWidth: 75, alignment: .leading)
+                    Spacer()
+                    VStack(alignment: .center) {
+                        Text("Remaining")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Text("\(secondsToHoursMinutesSeconds(-Int64(getTotalTime() - Double(getNumberOfDaysForWeekNumber(weekNumber: Int64(Calendar.current.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0))))))))")
+                    }
+                    .frame(minWidth: 75, alignment: .center)
+                    Spacer()
+                    VStack(alignment: .trailing) {
+                        Text("To-Do")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Text("\(secondsToHoursMinutesSeconds(getNumberOfDaysForWeekNumber(weekNumber: Int64(Calendar.current.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0))))))")
+                    }
+                    .frame(minWidth: 75, alignment: .trailing)
+                }
+                .listRowSeparator(.hidden)
+                ProgressView(value: getTotalTime(), total: Double(getNumberOfDaysForWeekNumber(weekNumber: Int64(Calendar.current.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0))))))
                     .tint(getProgressColor(value: Int64(getTotalTime()), total: Int64(getNumberOfDaysForWeekNumber(weekNumber: Int64(Calendar.current.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0)))))))
                 Section("Monday \(secondsToHoursMinutesSeconds(Int64(mondayStart.distance(to: mondayEnd)) - Int64(mondayBreakMin * 60) - Int64(mondayBreakHour * 60 * 60)))") {
                     DatePicker(selection: $mondayStart, in: ...mondayEnd, displayedComponents: [.hourAndMinute]) {

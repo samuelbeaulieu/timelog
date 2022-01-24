@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC32B877279E15070045D0EA /* PlannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC32B876279E15070045D0EA /* PlannerView.swift */; };
 		DC4A93F2278B9CCF003A2FB1 /* timelogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4A93F1278B9CCF003A2FB1 /* timelogApp.swift */; };
 		DC4A93F4278B9CCF003A2FB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4A93F3278B9CCF003A2FB1 /* ContentView.swift */; };
 		DC4A93F6278B9CD0003A2FB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC4A93F5278B9CD0003A2FB1 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DC32B876279E15070045D0EA /* PlannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerView.swift; sourceTree = "<group>"; };
 		DC4A93EE278B9CCF003A2FB1 /* Timelog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timelog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC4A93F1278B9CCF003A2FB1 /* timelogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timelogApp.swift; sourceTree = "<group>"; };
 		DC4A93F3278B9CCF003A2FB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				DC4A93FA278B9CD0003A2FB1 /* Persistence.swift */,
 				DC4A93FC278B9CD0003A2FB1 /* timelog.xcdatamodeld */,
 				DC4A93F7278B9CD0003A2FB1 /* Preview Content */,
+				DC32B876279E15070045D0EA /* PlannerView.swift */,
 			);
 			path = timelog;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC4A93FB278B9CD0003A2FB1 /* Persistence.swift in Sources */,
+				DC32B877279E15070045D0EA /* PlannerView.swift in Sources */,
 				DC4A93FE278B9CD0003A2FB1 /* timelog.xcdatamodeld in Sources */,
 				DC4A93F4278B9CCF003A2FB1 /* ContentView.swift in Sources */,
 				DC4A93F2278B9CCF003A2FB1 /* timelogApp.swift in Sources */,

@@ -145,109 +145,118 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(update(items), id: \.self) { (section: [Item]) in
-                    Section(header: (
-                        HStack(alignment: .center) {
-                            Text("Week \(section[0].week)")
-                            Spacer()
-                            VStack(alignment: .trailing) {
+        TabView {
+            NavigationView {
+                List {
+                    ForEach(update(items), id: \.self) { (section: [Item]) in
+                        Section(header: (
+                            HStack(alignment: .center) {
+                                Text("Week \(section[0].week)")
+                                Spacer()
+                                VStack(alignment: .trailing) {
+                                    HStack() {
+                                        Text("\(secondsToHoursMinutesSeconds(getLoggedTimeForWeek(weekItems: yearDictionary[section[0].week]!)))")
+                                            .font(.caption2)
+                                        Spacer()
+                                        ProgressView(value: Double(getLoggedTimeForWeek(weekItems: yearDictionary[section[0].week]!)), total: Double(getNumberOfDaysForWeekNumber(weekNumber: section[0].week)))
+                                            .tint(getProgressColor(value: getLoggedTimeForWeek(weekItems: yearDictionary[section[0].week]!), total: getNumberOfDaysForWeekNumber(weekNumber: section[0].week)))
+                                        Spacer()
+                                        Text("\(secondsToHoursMinutesSeconds(getNumberOfDaysForWeekNumber(weekNumber: section[0].week)))")
+                                            .font(.caption2)
+                                    }
+                                }
+                                .frame(width: 170, alignment: .trailing)
+                                .onTapGesture {
+                                    showingAlert.toggle()
+                                    alertMessage = showLoggedTimeWithTotalTime(weekItems: yearDictionary[section[0].week]!, weekNumber: section[0].week)
+                                }
+                            }
+                        )) {
+                            ForEach(section, id: \.self) { item in
                                 HStack() {
-                                    Text("\(secondsToHoursMinutesSeconds(getLoggedTimeForWeek(weekItems: yearDictionary[section[0].week]!)))")
-                                        .font(.caption2)
-                                    Spacer()
-                                    ProgressView(value: Double(getLoggedTimeForWeek(weekItems: yearDictionary[section[0].week]!)), total: Double(getNumberOfDaysForWeekNumber(weekNumber: section[0].week)))
-                                        .tint(getProgressColor(value: getLoggedTimeForWeek(weekItems: yearDictionary[section[0].week]!), total: getNumberOfDaysForWeekNumber(weekNumber: section[0].week)))
-                                    Spacer()
-                                    Text("\(secondsToHoursMinutesSeconds(getNumberOfDaysForWeekNumber(weekNumber: section[0].week)))")
-                                        .font(.caption2)
+                                    Text(item.timeStart!, formatter: itemFormatter)
+                                    Image(systemName: "arrow.forward")
+                                    Text(item.timeEnd!, formatter: itemFormatter)
+                                }
+                                .badge(secondsToHoursMinutesSeconds(item.duration))
+                            }
+                            .onDelete { indexSet in
+                                deleteItems(section: section, offsets: indexSet)
+                            }
+                        }
+                    }
+                }
+                .listStyle(.insetGrouped)
+                .navigationTitle("Time Logs")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Menu("Notifications") {
+                            Button("Request Permission") {
+                                //Call a func here don't define it
+                                notificationManager.requestAuthorization()
+                            }
+                            Menu("Add Notifications") {
+                                Menu("Monday") {
+                                    Button("At 12:00") {
+                                        addNotification12(weekday: 2)
+                                    }
+                                    Button("At 17:00") {
+                                        addNotification17(weekday: 2)
+                                    }
+                                }
+                                Menu("Tuesday") {
+                                    Button("At 12:00") {
+                                        addNotification12(weekday: 3)
+                                    }
+                                    Button("At 17:00") {
+                                        addNotification17(weekday: 3)
+                                    }
+                                }
+                                Menu("Wednesday") {
+                                    Button("At 12:00") {
+                                        addNotification12(weekday: 4)
+                                    }
+                                    Button("At 17:00") {
+                                        addNotification17(weekday: 4)
+                                    }
+                                }
+                                Menu("Thursday") {
+                                    Button("At 12:00") {
+                                        addNotification12(weekday: 5)
+                                    }
+                                    Button("At 17:00") {
+                                        addNotification17(weekday: 5)
+                                    }
+                                }
+                                Menu("Friday") {
+                                    Button("At 12:00") {
+                                        addNotification12(weekday: 6)
+                                    }
+                                    Button("At 17:00") {
+                                        addNotification17(weekday: 6)
+                                    }
                                 }
                             }
-                            .frame(width: 170, alignment: .trailing)
-                            .onTapGesture {
-                                showingAlert.toggle()
-                                alertMessage = showLoggedTimeWithTotalTime(weekItems: yearDictionary[section[0].week]!, weekNumber: section[0].week)
-                            }
+                            Button("Delete All Notifications", action: deleteNotification)
                         }
-                    )) {
-                        ForEach(section, id: \.self) { item in
-                            HStack() {
-                                Text(item.timeStart!, formatter: itemFormatter)
-                                Image(systemName: "arrow.forward")
-                                Text(item.timeEnd!, formatter: itemFormatter)
-                            }
-                            .badge(secondsToHoursMinutesSeconds(item.duration))
-                        }
-                        .onDelete { indexSet in
-                            deleteItems(section: section, offsets: indexSet)
+                    }
+                    ToolbarItem(placement: .automatic) {
+                        EditButton()
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: showSheet) {
+                            Label("Add Transaction", systemImage: "plus")
                         }
                     }
                 }
             }
-            .listStyle(.insetGrouped)
-            .navigationTitle("Time Logs")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Menu("Notifications") {
-                        Button("Request Permission") {
-                            //Call a func here don't define it
-                            notificationManager.requestAuthorization()
-                        }
-                        Menu("Add Notifications") {
-                            Menu("Monday") {
-                                Button("At 12:00") {
-                                    addNotification12(weekday: 2)
-                                }
-                                Button("At 17:00") {
-                                    addNotification17(weekday: 2)
-                                }
-                            }
-                            Menu("Tuesday") {
-                                Button("At 12:00") {
-                                    addNotification12(weekday: 3)
-                                }
-                                Button("At 17:00") {
-                                    addNotification17(weekday: 3)
-                                }
-                            }
-                            Menu("Wednesday") {
-                                Button("At 12:00") {
-                                    addNotification12(weekday: 4)
-                                }
-                                Button("At 17:00") {
-                                    addNotification17(weekday: 4)
-                                }
-                            }
-                            Menu("Thursday") {
-                                Button("At 12:00") {
-                                    addNotification12(weekday: 5)
-                                }
-                                Button("At 17:00") {
-                                    addNotification17(weekday: 5)
-                                }
-                            }
-                            Menu("Friday") {
-                                Button("At 12:00") {
-                                    addNotification12(weekday: 6)
-                                }
-                                Button("At 17:00") {
-                                    addNotification17(weekday: 6)
-                                }
-                            }
-                        }
-                        Button("Delete All Notifications", action: deleteNotification)
-                    }
-                }
-                ToolbarItem(placement: .automatic) {
-                    EditButton()
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: showSheet) {
-                        Label("Add Transaction", systemImage: "plus")
-                    }
-                }
+            .tabItem {
+                Label("Time Logs", systemImage: "clock.badge.checkmark")
             }
+            PlannerView()
+                .tabItem {
+                    Label("Week Planner", systemImage: "calendar.badge.clock")
+                }
         }
         .sheet(isPresented: $showingSheet) {
             NavigationView {

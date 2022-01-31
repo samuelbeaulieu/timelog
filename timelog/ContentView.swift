@@ -262,6 +262,43 @@ struct ContentView: View {
     }
     
     private func showLoggedTimeWithTotalTime(weekItems: [Item], weekNumber: Int64) -> String {
+        var mon: Array<Item> = []
+        var tue: Array<Item> = []
+        var wed: Array<Item> = []
+        var thu: Array<Item> = []
+        var fri: Array<Item> = []
+        var sat: Array<Item> = []
+        var sun: Array<Item> = []
+        
+        for item in weekItems {
+            switch (item.timeStart!.dayOfWeek) {
+            case "Monday":
+                mon.append(item)
+            case "Tuesday":
+                tue.append(item)
+            case "Wednesday":
+                wed.append(item)
+            case "Thursday":
+                thu.append(item)
+            case "Friday":
+                fri.append(item)
+            case "Saturday":
+                sat.append(item)
+            case "Sunday":
+                sun.append(item)
+            default:
+                print(item.timeStart!.dayOfWeek)
+            }
+        }
+        
+        let monLogged = getLoggedTimeForWeek(weekItems: mon)
+        let tueLogged = getLoggedTimeForWeek(weekItems: tue)
+        let wedLogged = getLoggedTimeForWeek(weekItems: wed)
+        let thuLogged = getLoggedTimeForWeek(weekItems: thu)
+        let friLogged = getLoggedTimeForWeek(weekItems: fri)
+        let satLogged = getLoggedTimeForWeek(weekItems: sat)
+        let sunLogged = getLoggedTimeForWeek(weekItems: sun)
+        
         let logged = getLoggedTimeForWeek(weekItems: weekItems)
         let total = getNumberOfDaysForWeekNumber(weekNumber: weekNumber)
         
@@ -269,11 +306,13 @@ struct ContentView: View {
         
         let remainingInDays = (Double(total) - Double(logged)) / Double(31500)
         
+        let seconds: Double = 3600
+        
         if remaining == 0 {
-            return "You're done! ⌛️\nGo enjoy your free time!! 🥳"
+            return "You're done! ⌛️\nGo enjoy your free time!! 🥳\n\nMon: \(secondsToHoursMinutesSeconds(monLogged)) or \(String(format:"%.2f", Double(monLogged) / seconds))h\nTue: \(secondsToHoursMinutesSeconds(tueLogged)) or \(String(format:"%.2f", Double(tueLogged) / seconds))h\nWed: \(secondsToHoursMinutesSeconds(wedLogged)) or \(String(format:"%.2f", Double(wedLogged) / seconds))h\nThu: \(secondsToHoursMinutesSeconds(thuLogged)) or \(String(format:"%.2f", Double(thuLogged) / seconds))h\nFri: \(secondsToHoursMinutesSeconds(friLogged)) or \(String(format:"%.2f", Double(friLogged) / seconds))h\nSat: \(secondsToHoursMinutesSeconds(satLogged)) or \(String(format:"%.2f", Double(satLogged) / seconds))h\nSun: \(secondsToHoursMinutesSeconds(sunLogged)) or \(String(format:"%.2f", Double(sunLogged) / seconds))h"
         }
 
-        return "\(secondsToHoursMinutesSeconds(remaining)) or \(String(format:"%.3f", remainingInDays)) days (of 8h 45m)"
+        return "\(secondsToHoursMinutesSeconds(remaining)) or \(String(format:"%.3f", remainingInDays)) days (of 8h 45m)\n\nMon: \(secondsToHoursMinutesSeconds(monLogged)) or \(String(format:"%.2f", Double(monLogged) / seconds))h\nTue: \(secondsToHoursMinutesSeconds(tueLogged)) or \(String(format:"%.2f", Double(tueLogged) / seconds))h\nWed: \(secondsToHoursMinutesSeconds(wedLogged)) or \(String(format:"%.2f", Double(wedLogged) / seconds))h\nThu: \(secondsToHoursMinutesSeconds(thuLogged)) or \(String(format:"%.2f", Double(thuLogged) / seconds))h\nFri: \(secondsToHoursMinutesSeconds(friLogged)) or \(String(format:"%.2f", Double(friLogged) / seconds))h\nSat: \(secondsToHoursMinutesSeconds(satLogged)) or \(String(format:"%.2f", Double(satLogged) / seconds))h\nSun: \(secondsToHoursMinutesSeconds(sunLogged)) or \(String(format:"%.2f", Double(sunLogged) / seconds))h"
     }
 
     private func getLoggedTimeForWeek(weekItems: [Item]) -> Int64 {
@@ -370,6 +409,12 @@ extension Date {
         let calendar = Calendar.current
         let dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: self)
         return calendar.date(from: dateComponents)
+    }
+    
+    var dayOfWeek: String {
+      let formatter = DateFormatter()
+      formatter.setLocalizedDateFormatFromTemplate("EEEE")
+      return formatter.string(from: self)
     }
     
     var weekOfYear: Int {
